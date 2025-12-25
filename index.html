@@ -147,8 +147,18 @@
       100% { opacity: 0; visibility: hidden; } /* Fade out and hide completely */
     }
 
-    /* Ensure main content is hidden until splash screen is done */
-    body:not(.loaded) > .flex.flex-col.items-center { display: none; } /* Added for Colab compatibility */
+    /* Main content styling */
+    .main-content-fade {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.7s ease-in, visibility 0s 0.7s;
+    }
+
+    .main-content-fade.visible {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: 0s;
+    }
   </style>
 </head>
 
@@ -161,7 +171,7 @@
       class="splash-logo">
   </div>
 
-  <div class="flex flex-col items-center px-6 py-14">
+  <div id="main-page-content" class="flex flex-col items-center px-6 py-14 main-content-fade">
 
     <!-- PROFILE -->
     <div class="text-center mb-12">
@@ -236,10 +246,12 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const splashScreen = document.getElementById('splash-screen');
-      // Listen for the end of the fadeOutSplash animation
+      const mainPageContent = document.getElementById('main-page-content');
+
+      // Listen for the end of the fadeOutSplash animation on the splash screen
       splashScreen.addEventListener('animationend', function() {
-        document.body.classList.add('loaded'); // Add 'loaded' class to body
         splashScreen.style.display = 'none'; // Hide splash screen completely after fade
+        mainPageContent.classList.add('visible'); // Make main content visible and trigger its fade-in
       });
     });
   </script>
