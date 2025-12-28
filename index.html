@@ -1,4 +1,3 @@
-%%html
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -14,140 +13,72 @@
     body {
       font-family: 'Heebo', sans-serif;
       background:
-        radial-gradient(circle at 100% 100%, rgba(34,197,94,0.3) 0%, rgba(34,197,94,0) 20%), /* Bottom right green glow */
-        radial-gradient(circle at 0% 100%, rgba(99,102,241,0.3) 0%, rgba(99,102,241,0) 20%), /* Bottom left light blue glow */
-        radial-gradient(circle at top, #1a202a, #01030d 70%); /* Original top light */
-      background-size: auto, auto, auto;
-      background-position: 0 0, 0 0, 0 0;
+        radial-gradient(circle at 100% 100%, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0) 25%), 
+        radial-gradient(circle at 0% 100%, rgba(99,102,241,0.2) 0%, rgba(99,102,241,0) 25%), 
+        radial-gradient(circle at top, #1a202a, #01030d 80%); 
+      background-color: #01030d;
       min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      cursor: auto; /* סמן עכבר רגיל */
+    }
+
+    /* הילת האור (Spotlight) */
+    #spotlight {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(99,102,241,0) 70%);
+      border-radius: 50%;
+      pointer-events: none; /* שלא יפריע ללחיצות */
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      display: none; /* יופיע רק כשהתוכן נטען */
     }
 
     .card {
-      background: linear-gradient(145deg, #0c1426, #01030d); /* Slightly darker cards */
+      background: linear-gradient(145deg, #0c1426, #01030d);
       border: 1px solid rgba(255,255,255,0.08);
-      box-shadow:
-        0 0 0 rgba(0,0,0,0),
-        0 10px 30px rgba(0,0,0,0.6);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
       transition: all .25s ease;
+      position: relative;
+      z-index: 2; /* מעל האור */
     }
 
     .card:hover {
       transform: translateY(-6px) scale(1.01);
-      box-shadow:
-        0 0 25px rgba(59,130,246,.6),
-        0 20px 50px rgba(0,0,0,.8);
+      box-shadow: 0 0 25px rgba(59,130,246,.5), 0 20px 50px rgba(0,0,0,.8);
+      border-color: rgba(255,255,255,0.2);
     }
 
-    .neon {
-      text-shadow: 0 0 12px rgba(255,255,255,.35);
-    }
+    .neon { text-shadow: 0 0 12px rgba(255,255,255,.35); }
 
-    #profile-image:hover { /* New hover effect for profile image */
-      box-shadow:
-        0 0 25px rgba(99,102,241,.6),
-        0 20px 50px rgba(0,0,0,.8);
-    }
-
-    #kick-link:hover {
-      box-shadow:
-        0 0 25px rgba(34,197,94,.6),
-      0 20px 50px rgba(0,0,0,.8);
-    }
-
-    #awards-link:hover {
-      box-shadow:
-        0 0 25px rgba(249,115,22,.6),
-      0 20px 50px rgba(0,0,0,.8);
-    }
-
-    #ban-link:hover {
-      box-shadow:
-        0 0 25px rgba(220,38,38,.6),
-      0 20px 50px rgba(0,0,0,.8);
-    }
-
-    #discord-link:hover {
-      box-shadow:
-        0 0 25px rgba(99,102,241,.6),
-      0 20px 50px rgba(0,0,0,.8);
-    }
-
-    #libero-link:hover {
-      box-shadow:
-        0 0 25px rgba(168,85,247,.6),
-      0 20px 50px rgba(0,0,0,.8);
-    }
-
-    #youtube-link:hover {
-      box-shadow:
-        0 0 25px rgba(239,68,68,.6),
-      0 20px 50px rgba(0,0,0,.8);
-    }
-
-    #rgg-link:hover {
-      box-shadow:
-        0 0 25px rgba(59,130,246,.6),
-      0 20px 50px rgba(0,0,0,.8);
-    }
-
-    #instagram-link:hover {
-      box-shadow:
-        0 0 25px rgba(255,0,128,.6),
-      0 20px 50px rgba(0,0,0,.8);
-    }
-
-    /* New splash screen animation */
+    /* Splash Screen */
     #splash-screen {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: #01030d;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 99999;
-      opacity: 1;
-      animation: fadeOutSplash 3.5s forwards; /* Increased duration */
+      animation: fadeOutSplash 3.5s forwards;
     }
 
     .splash-logo {
-      max-width: 150px; /* Adjust size as needed */
-      height: auto;
-      border-radius: 50%; /* Make the image circular */
-      box-shadow: 0 0 0 0 rgba(99,102,241, 0.7); /* Initial glow */
-      animation: logoPulse 1s 2, fadeInElement 0.5s ease-out forwards; /* 2 iterations */
+      max-width: 150px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(99,102,241, 0.7);
+      animation: logoPulse 1s 2, fadeInElement 0.5s ease-out forwards;
       opacity: 0;
     }
 
-    @keyframes fadeInElement {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
+    @keyframes fadeInElement { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    @keyframes logoPulse { 0%, 100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(99,102,241, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 30px rgba(99,102,241, 0); } }
+    @keyframes fadeOutSplash { 0%, 75% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
 
-    @keyframes logoPulse {
-      0% {
-        transform: scale(0.9);
-        box-shadow: 0 0 0 0 rgba(99,102,241, 0.7);
-      }
-      70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 30px rgba(99,102,241, 0); /* Adjusted glow size for image */
-      }
-      100% {
-        transform: scale(0.9);
-        box-shadow: 0 0 0 0 rgba(99,102,241, 0);
-      }
-    }
-
-    @keyframes fadeOutSplash {
-      0% { opacity: 1; }
-      70% { opacity: 1; } /* Hold full opacity for 70% of 3.5s = 2.45s, allowing logo to finish 2 pulses (2.5s total) */
-      100% { opacity: 0; visibility: hidden; } /* Fade out over the remaining 30% */
-    }
-
-    /* Main content styling for smooth fade-in */
     #main-page-content {
       opacity: 0;
       visibility: hidden;
@@ -162,99 +93,85 @@
 </head>
 
 <body>
-  <!-- Splash Screen Overlay -->
+  <div id="spotlight"></div>
+
   <div id="splash-screen">
-    <img
-      src="https://github.com/OdedSVR/images/blob/main/ODEDLL.png?raw=true"
-      alt="ODED SVR Logo"
-      class="splash-logo">
+    <img src="https://github.com/OdedSVR/images/blob/main/ODEDLL.png?raw=true" alt="ODED SVR Logo" class="splash-logo">
   </div>
 
   <div id="main-page-content" class="flex flex-col items-center px-6 py-14">
-
-    <!-- PROFILE -->
-    <div class="text-center mb-12">
-      <img
-        src="https://github.com/OdedSVR/images/blob/main/ODEDSVR.jpeg?raw=true"
-        id="profile-image"
-        class="w-36 h-36 rounded-full mx-auto border-4 border-white/20 shadow-2xl mb-5 object-cover">
-
-      <h1 class="text-4xl font-black text-white neon tracking-tight uppercase">
-        ODED SVR
-      </h1>
-
-      <p class="mt-2 text-sm text-white/60 font-bold tracking-widest">
-        OFFICIAL LINKS
-      </p>
+    <div class="text-center mb-12 relative z-10">
+      <img src="https://github.com/OdedSVR/images/blob/main/ODEDSVR.jpeg?raw=true" id="profile-image" class="w-36 h-36 rounded-full mx-auto border-4 border-white/20 shadow-2xl mb-5 object-cover transition-all duration-300 hover:scale-105">
+      <h1 class="text-4xl font-black text-white neon tracking-tight uppercase">ODED SVR</h1>
+      <p class="mt-2 text-sm text-white/60 font-bold tracking-widest">OFFICIAL LINKS</p>
     </div>
 
-    <!-- LINKS -->
-    <div class="w-full max-w-md space-y-4 mx-auto">
-
+    <div class="w-full max-w-md space-y-4 mx-auto relative z-10">
       <a href="https://awards.shotist.net/vote" target="_blank" id="awards-link" class="card block rounded-2xl p-5 text-center">
-        <div class="text-2xl font-black text-orange-400"> תצביעו לעודד כסטרימר השנה!</div>
-        <p class="mt-1 text-xs text-orange-300 font-bold">
-         לייבים ארוכים כמעט כל יום - תראו אהבה
-        </p>
+        <div class="text-2xl font-black text-orange-400">תצביעו לעודד כסטרימר השנה!</div>
+        <p class="mt-1 text-xs text-orange-300 font-bold">לייבים ארוכים כמעט כל יום - תראו אהבה</p>
       </a>
 
       <a href="https://kick.com/odedsvr" target="_blank" id="kick-link" class="card block rounded-2xl p-5 text-center">
-        <div class="text-xl font-black text-green-400"><img src="https://github.com/OdedSVR/images/blob/main/kick%20logo.png?raw=true" alt="Kick Logo" class="inline-block h-8 w-8 align-middle mr-2"> Kick – לייבים</div>
-      </a>
-
-      <a href="https://forms.gle/uRaRfwD6EmEeJv887" target="_blank" id="ban-link" class="card block rounded-2xl p-5 text-center">
-        <div class="text-xl font-black text-red-400">📝 ערעור על באן</div>
-        <p class="text-xs text-red-300 font-bold mt-1">
-          לא יכולים לכתוב בצ'אט?
-        </p>
+        <div class="text-xl font-black text-green-400">
+          <img src="https://github.com/OdedSVR/images/blob/main/kick%20logo.png?raw=true" alt="Kick" class="inline-block h-8 w-8 align-middle mr-2"> 
+          Kick – לייבים
+        </div>
       </a>
 
       <a href="https://discord.gg/4T83uTNaju" target="_blank" id="discord-link" class="card block rounded-2xl p-5 text-center">
-        <div class="text-xl font-black text-indigo-400"><img src="https://github.com/OdedSVR/images/blob/main/discor%20logo.png?raw=true" alt="Discord Logo" class="inline-block h-10 w-10 align-middle mr-2"> הדיסקורד הרשמי</div>
+        <div class="text-xl font-black text-indigo-400">
+          <img src="https://github.com/OdedSVR/images/blob/main/discor%20logo.png?raw=true" alt="Discord" class="inline-block h-10 w-10 align-middle mr-2"> 
+          הדיסקורד הרשמי
+        </div>
       </a>
 
       <a href="https://libero-il.co.il/" target="_blank" id="libero-link" class="card block rounded-2xl p-5 text-center">
         <div class="text-xl font-black text-purple-400">💎 LIBERO</div>
-        <div class="mt-2 flex justify-center">
-          <span class="bg-white/10 text-purple-200 text-[10px] font-bold px-1 py-0.5 rounded-full">OSVR10 - 10% הנחה על כלל האתר</span>
-          <span class="bg-white/10 text-purple-200 text-[10px] font-bold px-1 py-0.5 rounded-full">OSVR - שתיים עשרה פרפיום + נויה מתנה</span>
-          <span class="bg-white/10 text-purple-200 text-[10px] font-bold px-1 py-0.5 rounded-full">OSVR+1 - מיגל מרה + טסטר חינם</span>
-        </div>
+        <p class="text-[10px] text-purple-200 mt-1 font-bold">OSVR10 - 10% הנחה על כל האתר</p>
       </a>
 
       <a href="https://www.youtube.com/@odedsvr95" target="_blank" id="youtube-link" class="card block rounded-2xl p-5 text-center">
-        <div class="text-xl font-black text-red-400"><img src="https://github.com/OdedSVR/images/blob/main/YTLOGO.png?raw=true" alt="YouTube Logo" class="inline-block h-8 w-8 align-middle mr-2"> YouTube – הערוץ הרשמי</div>
+        <div class="text-xl font-black text-red-400">
+          <img src="https://github.com/OdedSVR/images/blob/main/YTLOGO.png?raw=true" alt="YouTube" class="inline-block h-8 w-8 align-middle mr-2"> 
+          YouTube – הערוץ הרשמי
+        </div>
       </a>
-
-         <a href="https://www.instagram.com/odedsvr/" target="_blank" id="instagram-link" class="card block rounded-2xl p-5 text-center">
-        <div class="text-xl font-black text-pink-400"><img src="https://github.com/OdedSVR/images/blob/main/instlogo.png?raw=true" alt="Instagram Logo" class="inline-block h-6 w-6 align-middle mr-2"> עדכונים בסטורי</div>
+      
+      <a href="https://www.instagram.com/odedsvr/" target="_blank" id="instagram-link" class="card block rounded-2xl p-5 text-center">
+        <div class="text-xl font-black text-pink-400">
+          <img src="https://github.com/OdedSVR/images/blob/main/instlogo.png?raw=true" alt="Instagram" class="inline-block h-6 w-6 align-middle mr-2"> 
+          עדכונים בסטורי
+        </div>
       </a>
-
-      <a href="https://rggplay.com/?ref=RGG-8764e9784" target="_blank" id="rgg-link" class="card block rounded-2xl p-5 text-center">
-        <div class="text-xl font-black text-blue-400">🎮 RGG PLAY</div>
-        <p class="mt-1 text-xs text-blue-300 font-bold">קוד: ODEDSVR</p>
-      </a>
-
     </div>
-    <footer class="mt-3 text-xs text-white/40 font-bold text-center w-full max-w-md mx-auto mt-8">
+
+    <footer class="mt-16 text-xs text-white/40 font-bold text-center">
       © 2025 OdedSVR | Created by Piker
     </footer>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const splashScreen = document.getElementById('splash-screen');
-      const mainPageContent = document.getElementById('main-page-content');
+    const spotlight = document.getElementById('spotlight');
+    const mainContent = document.getElementById('main-page-content');
+    const splash = document.getElementById('splash-screen');
 
-      // Listen for the end of the fadeOutSplash animation
-      splashScreen.addEventListener('animationend', function() {
-        splashScreen.style.display = 'none'; // Hide splash screen completely after fade
-        mainPageContent.classList.add('visible'); // Make main content visible and trigger its fade-in
-      });
+    // תנועת האור - ללא דיליי
+    document.addEventListener('mousemove', (e) => {
+      // עדכון המיקום של האור לפי העכבר
+      spotlight.style.left = e.clientX + 'px';
+      spotlight.style.top = e.clientY + 'px';
     });
+
+    // פונקציה להצגת האתר (מותאם ל-Colab)
+    function activateSite() {
+      if(splash) splash.style.display = 'none';
+      if(mainContent) mainContent.classList.add('visible');
+      if(spotlight) spotlight.style.display = 'block'; // הפעלת האור רק כשהאתר מוכן
+    }
+
+    // הפעלה לאחר 3.5 שניות (זמן האנימציה)
+    setTimeout(activateSite, 3500);
   </script>
 </body>
 </html>
-
-
-
